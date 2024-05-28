@@ -57,7 +57,7 @@ public:
 
     void print() {
         for (int i = 0; i < hashTableSize; ++i) {
-            cout << "SeparateChaining [" << i << "] =";
+            cout << "SeparateChaining[" << i << "] =";
 
             auto listIterator = hashTable[i].begin();
             while (listIterator != hashTable[i].end()) {
@@ -70,8 +70,9 @@ public:
     }
 
     void clear() {
-        numElements = 0;
         delete[] hashTable;
+
+        numElements = 0;
         hashTable = new list<pair<T, E>>[L];
     }
 
@@ -82,7 +83,7 @@ private:
 
     int hashFunction(T key) {
         int modulus = key % hashTableSize;
-        return modulus < 0 ? modulus + 14 : modulus;
+        return modulus < 0 ? modulus + hashTableSize : modulus;
     }
 };
 
