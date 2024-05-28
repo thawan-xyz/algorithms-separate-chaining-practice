@@ -12,10 +12,6 @@ public:
         hashTable = new list<pair<T, E>>[L];
     }
 
-    int hashFunction(T key) {
-        return key % hashTableSize;
-    }
-
     void insert(T key, E value) {
         if (!find(key).has_value()) {
             int hashPosition = hashFunction(key);
@@ -74,9 +70,8 @@ public:
     }
 
     void clear() {
-        delete[] hashTable;
-
         numElements = 0;
+        delete[] hashTable;
         hashTable = new list<pair<T, E>>[L];
     }
 
@@ -84,6 +79,11 @@ private:
     int hashTableSize;
     int numElements;
     list<pair<T, E>>* hashTable;
+
+    int hashFunction(T key) {
+        int modulus = key % hashTableSize;
+        return modulus < 0 ? modulus + 14 : modulus;
+    }
 };
 
 int main() {
